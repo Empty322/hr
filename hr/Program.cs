@@ -1,11 +1,21 @@
+using hr.AutoMapper;
 using hr.DB;
+using hr.Services;
+using hr.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<ApplicationDbContext>(opt => 
-	opt.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddDbContext<ApplicationDbContext>(opt => {
+	opt.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+	opt.EnableSensitiveDataLogging();
+});
+
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
+builder.Services.AddTransient<ICandidateService, CandidateService>();
+builder.Services.AddTransient<IPlaceOfWorkService, PlaceOfWorkService>();
 
 builder.Services.AddControllers();
 

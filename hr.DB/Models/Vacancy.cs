@@ -10,16 +10,16 @@ public class Vacancy
 	/// <summary>
 	/// Наименование
 	/// </summary>
-	public string Title { get; set; }
+	public string Title { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Описание
 	/// </summary>
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Технологии
 	/// </summary>
-	public IEnumerable<Technology> Technologies { get; set; }
+	public List<Technology>? Technologies { get; set; }
 
 }

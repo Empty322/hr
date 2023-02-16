@@ -1,14 +1,17 @@
-﻿namespace hr.DB.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace hr.DB.Models;
 
 /// <summary>
 /// Технология
 /// </summary>
 public class Technology
 {
-	public int Id { get; set; }
-
 	/// <summary>
 	/// Наименование
 	/// </summary>
-	public string Title { get; set; }
+	[Key]
+	public string Title { get; set; } = string.Empty;
+	public List<Vacancy>? Vacancies { get; set; }
+	public List<TechnologyPlaceOfWork>? PlacesOfWork { get; set; }
 }

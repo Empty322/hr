@@ -10,30 +10,38 @@ public class PlaceOfWork
 	/// <summary>
 	/// Дата начала работы
 	/// </summary>
-	public DateOnly Begin { get; set; }
+	public DateTime Begin { get; set; }
 
 	/// <summary>
 	/// Дата окончания работы
 	/// </summary>
-	public DateOnly End { get; set; }
+	public DateTime End { get; set; }
 
 	/// <summary>
 	/// Название компании
 	/// </summary>
-	public string Company { get; set; }
+	public string Company { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Занимаемая должность
 	/// </summary>
-	public string Position { get; set; }
+	public string Position { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Описание
 	/// </summary>
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
+
+	public int CandidateId { get; set; }
+	/// <summary>
+	/// Кандидат
+	/// </summary>
+	public Candidate? Candidate { get; set; }
 
 	/// <summary>
 	/// Список технологий
 	/// </summary>
-	public IEnumerable<Technology> Technologies { get; set; }
+	public List<TechnologyPlaceOfWork>? Technologies { get; set; }
+
+
 }

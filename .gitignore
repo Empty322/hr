@@ -6,3 +6,7 @@
 /hr/obj
 /hr.DB/obj
 *.user
+/hr/bin/Debug/net6.0
+/hr.DB/bin/Debug/net6.0
+/hr.Tests/bin/Debug/net6.0
+/hr.Tests/obj
