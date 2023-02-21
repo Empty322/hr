@@ -27,6 +27,9 @@ namespace hr.DB
 
 			modelBuilder.Entity<TechnologyPlaceOfWork>().HasOne(x => x.PlaceOfWork).WithMany(x => x.Technologies);
 			modelBuilder.Entity<TechnologyPlaceOfWork>().HasKey(x => new { x.PlaceOfWorkId, x.TechnologyTitle });
+
+			modelBuilder.Entity<TechnologyVacancy>().HasOne(x => x.Vacancy).WithMany(x => x.Technologies);
+			modelBuilder.Entity<TechnologyVacancy>().HasKey(x => new { x.VacancyId, x.TechnologyTitle });
 		}
 	}
 }

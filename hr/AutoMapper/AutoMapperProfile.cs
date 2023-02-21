@@ -3,6 +3,7 @@ using hr.DB.Models;
 using hr.Models.Candidate;
 using hr.Models.PlaceOfWork;
 using hr.Models.Technology;
+using hr.Models.Vacancy;
 
 namespace hr.AutoMapper
 {
@@ -50,7 +51,42 @@ namespace hr.AutoMapper
 					}
 				);
 
-			CreateMap<PlaceOfWorkDTO, CreatePlaceOfWorkRequest>().ReverseMap();
+			CreateMap<Vacancy, VacancyDTO>()
+				.ForMember(
+					dest => dest.Technologies,
+					opt => {
+						opt.Condition(x => x.Technologies != null);
+						opt.MapFrom(x => x.Technologies.Select(x =>
+							new TechnologyDTO { Title = x.TechnologyTitle }));
+					})
+				.ReverseMap()
+				.ForMember(
+					dest => dest.Technologies,
+					opt =>
+					{
+						opt.Condition(x => x.Technologies != null);
+						opt.MapFrom(x => x.Technologies.Select(x =>
+							new TechnologyVacancy { TechnologyTitle = x.Title, Technology = new Technology { Title = x.Title } }));
+					}
+				);
+			CreateMap<Vacancy, CreateVacancyRequest>()
+				.ForMember(
+					dest => dest.Technologies,
+					opt => {
+						opt.Condition(x => x.Technologies != null);
+						opt.MapFrom(x => x.Technologies.Select(x =>
+							new TechnologyDTO { Title = x.TechnologyTitle }));
+					})
+				.ReverseMap()
+				.ForMember(
+					dest => dest.Technologies,
+					opt =>
+					{
+						opt.Condition(x => x.Technologies != null);
+						opt.MapFrom(x => x.Technologies.Select(x =>
+							new TechnologyVacancy { TechnologyTitle = x.Title, Technology = new Technology { Title = x.Title } }));
+					}
+				);
 
 			CreateMap<Technology, TechnologyDTO>().ReverseMap();
 		}

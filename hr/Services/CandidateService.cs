@@ -2,24 +2,19 @@
 using hr.DB;
 using hr.DB.Models;
 using hr.Models.Candidate;
-using hr.Models.PlaceOfWork;
 using hr.Models.Technology;
 using hr.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace hr.Services;
 
 public class CandidateService : ICandidateService
 {
 	private readonly ApplicationDbContext dbContext;
-	private readonly IPlaceOfWorkService placeOfWorkService;
 	private readonly IMapper mapper;
 
-	public CandidateService(ApplicationDbContext dbContext, IPlaceOfWorkService placeOfWorkService, IMapper mapper)
+	public CandidateService(ApplicationDbContext dbContext, IMapper mapper)
 	{
 		this.dbContext = dbContext;
-		this.placeOfWorkService = placeOfWorkService;
 		this.mapper = mapper;
 	}
 
@@ -28,37 +23,17 @@ public class CandidateService : ICandidateService
 		if (candidateToCreate == null) 
 			throw new ArgumentNullException(nameof(candidateToCreate));
 
-		var placesOfWork = candidateToCreate.PlacesOfWork;
-		candidateToCreate.PlacesOfWork = null;
+		var dbCandidate = mapper.Map<Candidate>(candidateToCreate);
 
-		var candidate = mapper.Map<Candidate>(candidateToCreate);
-
-		dbContext.Candidates.Add(candidate);
+		dbContext.Candidates.Add(dbCandidate);
 		dbContext.SaveChanges();
 
-		var createdPlacesOfWork = new List<PlaceOfWorkDTO>();
-		foreach (var placeOfWork in placesOfWork)
-		{
-			placeOfWork.CandidateId = candidate.Id;
-			var createdPlaceOfWork = placeOfWorkService.Create(placeOfWork);
-			
-			createdPlaceOfWork.Candidate = null;
-			createdPlacesOfWork.Add(createdPlaceOfWork);
-		}
-		var createdCandidate = mapper.Map<CandidateDTO>(candidate);
-		createdCandidate.PlacesOfWork = createdPlacesOfWork;
-
-		return createdCandidate;
+		return mapper.Map<CandidateDTO>(dbCandidate);
 	}
 
 	public CandidateDTO? Get(int id)
 	{
-		var candidate = dbContext.Candidates
-			.Include(x => x.PlacesOfWork).ThenInclude(x => x.Technologies)
-			.SingleOrDefault(x => x.Id == id);
-
-		foreach (var place in candidate.PlacesOfWork)
-			place.Candidate = null;
+		var candidate = dbContext.Candidates.Find(id);
 
 		return mapper.Map<CandidateDTO>(candidate);
 	}
@@ -76,20 +51,6 @@ public class CandidateService : ICandidateService
 		if (dbCandidate == null)
 			return null;
 
-		if (newCandidate.PlacesOfWork != null)
-		{
-			foreach (var place in newCandidate.PlacesOfWork)
-			{
-				if (placeOfWorkService.Update(place) == null)
-				{
-					var createPlaceOfWorkRequest = mapper.Map<CreatePlaceOfWorkRequest>(place);
-					createPlaceOfWorkRequest.CandidateId = dbCandidate.Id;
-					placeOfWorkService.Create(createPlaceOfWorkRequest);
-				}
-			}
-		}
-
-		newCandidate.PlacesOfWork = null;
 		mapper.Map(newCandidate, dbCandidate);
 		dbContext.SaveChanges();
 
@@ -98,15 +59,15 @@ public class CandidateService : ICandidateService
 
 	public CandidateDTO? Delete(int id)
 	{
-		var candidate = dbContext.Candidates.Find(id);
+		var dbCandidate = dbContext.Candidates.Find(id);
 
-		if (candidate == null)
+		if (dbCandidate == null)
 			return null;
 
-		dbContext.Candidates.Remove(candidate);
+		dbContext.Candidates.Remove(dbCandidate);
 
 		dbContext.SaveChanges();
 
-		return mapper.Map<CandidateDTO>(candidate);
+		return mapper.Map<CandidateDTO>(dbCandidate);
 	}
 }

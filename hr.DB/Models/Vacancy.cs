@@ -20,6 +20,6 @@ public class Vacancy
 	/// <summary>
 	/// Технологии
 	/// </summary>
-	public List<Technology>? Technologies { get; set; }
+	public List<TechnologyVacancy>? Technologies { get; set; }
 
 }

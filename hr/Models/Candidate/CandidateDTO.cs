@@ -11,5 +11,4 @@ public class CandidateDTO
 	public Education Education { get; set; }
 	public string University { get; set; } = string.Empty;
 	public string Faculty { get; set; } = string.Empty;
-	public IEnumerable<PlaceOfWorkDTO>? PlacesOfWork { get; set; }
 }

@@ -13,6 +13,5 @@ public class PlaceOfWorkDTO
 	public string Position { get; set; } = string.Empty;
 	public string Description { get; set; } = string.Empty;
 	public int CandidateId { get; set; }
-	public CandidateDTO? Candidate { get; set; }
 	public IEnumerable<TechnologyDTO>? Technologies { get; set; }
 }

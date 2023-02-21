@@ -47,7 +47,7 @@ namespace hr.Controllers
 		}
 
 		[HttpPut]
-		public ActionResult Update([FromBody] CandidateDTO candidate)
+		public ActionResult<CandidateDTO> Update([FromBody] CandidateDTO candidate)
 		{
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
@@ -56,18 +56,18 @@ namespace hr.Controllers
 			if (updatedCandidate == null)
 				return NotFound();
 
-			return Ok();
+			return Ok(updatedCandidate);
 		}
 
 		[HttpDelete("{id}")]
-		public ActionResult Delete(int id)
+		public ActionResult<CandidateDTO> Delete(int id)
 		{
 			var deletedCandidate = candidateService.Delete(id);
 
 			if (deletedCandidate == null)
 				return NotFound();
 
-			return Ok();
+			return Ok(deletedCandidate);
 		}
 	}
 }
