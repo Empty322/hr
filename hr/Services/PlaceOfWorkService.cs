@@ -36,6 +36,7 @@ namespace hr.Services
 				SetTechnologyStates(dbPlaceOfWork.Technologies);
 
 			dbContext.SaveChanges();
+			dbContext.ChangeTracker.Clear();
 
 			return mapper.Map<PlaceOfWorkDTO>(dbPlaceOfWork);
 		}
@@ -54,8 +55,7 @@ namespace hr.Services
 			if (placeOfWork == null)
 				throw new ArgumentNullException(nameof(placeOfWork));
 
-			var dbPlaceOfWork = dbContext.PlacesOfWork
-				.SingleOrDefault(x => x.Id == placeOfWork.Id);
+			var dbPlaceOfWork = dbContext.PlacesOfWork.Find(placeOfWork.Id);
 
 			if (dbPlaceOfWork == null)
 				return null;

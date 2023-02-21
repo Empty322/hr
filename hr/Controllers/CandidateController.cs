@@ -1,4 +1,5 @@
 using hr.Models.Candidate;
+using hr.Models.Technology;
 using hr.Services;
 using hr.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,7 @@ namespace hr.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult<CandidateDTO> Create(CreateCandidateRequest candidate)
+		public ActionResult<CandidateDTO> Create([FromBody] CreateCandidateRequest candidate)
 		{
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
@@ -25,12 +26,6 @@ namespace hr.Controllers
 			var createdCandidate = candidateService.Create(candidate);
 
 			return Ok(createdCandidate);
-		}
-
-		[HttpGet]
-		public ActionResult<IEnumerable<CandidateDTO>> Search()
-		{
-			throw new NotImplementedException();
 		}
 
 		[HttpGet("{id}")]
@@ -44,8 +39,15 @@ namespace hr.Controllers
 			return Ok(candidate);
 		}
 
+		[HttpGet("suitable")]
+		public ActionResult<IEnumerable<CandidateDTO>> GetSuitableCandidates([FromBody] IEnumerable<TechnologyDTO> technologies)
+		{
+			var candidates = candidateService.GetSuitable(technologies);
+			return Ok(candidates);
+		}
+
 		[HttpPut]
-		public ActionResult Update(CandidateDTO candidate)
+		public ActionResult Update([FromBody] CandidateDTO candidate)
 		{
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);

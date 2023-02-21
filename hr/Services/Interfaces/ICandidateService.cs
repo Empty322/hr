@@ -1,4 +1,5 @@
 ﻿using hr.Models.Candidate;
+using hr.Models.Technology;
 
 namespace hr.Services.Interfaces
 {
@@ -6,6 +7,7 @@ namespace hr.Services.Interfaces
 	{
 		CandidateDTO Create(CreateCandidateRequest candidate);
 		CandidateDTO? Get(int id);
+		IEnumerable<CandidateDTO> GetSuitable(IEnumerable<TechnologyDTO> technologies);
 		CandidateDTO? Update(CandidateDTO candidate);
 		CandidateDTO? Delete(int id);
 	}

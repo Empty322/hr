@@ -5,11 +5,13 @@ namespace hr.DB
 {
 	public class ApplicationDbContext: DbContext
 	{
-		public DbSet<Candidate> Candidates { get; set; } = null!;
-		public DbSet<Vacancy> Vacancies { get; set; } = null!;
-		public DbSet<PlaceOfWork> PlacesOfWork { get; set; } = null!;
-		public DbSet<CandidateStatus> CandidateStatuses { get; set; } = null!;
-		public DbSet<Technology> Technologies { get; set; } = null!;
+		public virtual DbSet<Candidate> Candidates { get; set; } = null!;
+		public virtual DbSet<Vacancy> Vacancies { get; set; } = null!;
+		public virtual DbSet<PlaceOfWork> PlacesOfWork { get; set; } = null!;
+		public virtual DbSet<CandidateStatus> CandidateStatuses { get; set; } = null!;
+		public virtual DbSet<Technology> Technologies { get; set; } = null!;
+
+		public ApplicationDbContext() { }
 
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
 		{

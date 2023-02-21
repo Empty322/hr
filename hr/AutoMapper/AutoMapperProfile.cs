@@ -50,6 +50,8 @@ namespace hr.AutoMapper
 					}
 				);
 
+			CreateMap<PlaceOfWorkDTO, CreatePlaceOfWorkRequest>().ReverseMap();
+
 			CreateMap<Technology, TechnologyDTO>().ReverseMap();
 		}
 	}
