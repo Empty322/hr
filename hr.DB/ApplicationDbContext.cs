@@ -1,5 +1,7 @@
-﻿using hr.DB.Models;
+﻿using hr.DB.Configuration;
+using hr.DB.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace hr.DB
 {
@@ -22,14 +24,13 @@ namespace hr.DB
 		{
 			base.OnModelCreating(modelBuilder);
 
-			modelBuilder.Entity<Candidate>().HasMany(x => x.PlacesOfWork).WithOne(x => x.Candidate).OnDelete(DeleteBehavior.Cascade);
-			modelBuilder.Entity<Candidate>().HasMany(x => x.CandidateStatuses).WithOne(x => x.Candidate).OnDelete(DeleteBehavior.Cascade);
-
-			modelBuilder.Entity<TechnologyPlaceOfWork>().HasOne(x => x.PlaceOfWork).WithMany(x => x.Technologies);
-			modelBuilder.Entity<TechnologyPlaceOfWork>().HasKey(x => new { x.PlaceOfWorkId, x.TechnologyTitle });
-
-			modelBuilder.Entity<TechnologyVacancy>().HasOne(x => x.Vacancy).WithMany(x => x.Technologies);
-			modelBuilder.Entity<TechnologyVacancy>().HasKey(x => new { x.VacancyId, x.TechnologyTitle });
+			modelBuilder.ApplyConfiguration(new TechnologyConfiguration());
+			modelBuilder.ApplyConfiguration(new CandidateConfiguration());
+			modelBuilder.ApplyConfiguration(new PlaceOfWorkConfiguration());
+			modelBuilder.ApplyConfiguration(new TechnologyPlaceOfWorkConfiguration());
+			modelBuilder.ApplyConfiguration(new VacancyConfiguration());
+			modelBuilder.ApplyConfiguration(new TechnologyVacancyConfiguration());
+			modelBuilder.ApplyConfiguration(new CandidateStatusConfiguration());
 		}
 	}
 }
