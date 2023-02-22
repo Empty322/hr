@@ -1,15 +1,14 @@
 ﻿using hr.DB.Models;
+using hr.Models.PlaceOfWork.Base;
 using hr.Models.Technology;
+using System.ComponentModel.DataAnnotations;
 
 namespace hr.Models.PlaceOfWork;
 
-public class CreatePlaceOfWorkRequest
+public class CreatePlaceOfWorkRequest : PlaceOfWorkBaseModel
 {
-	public DateTime Begin { get; set; }
-	public DateTime End { get; set; }
-	public string Company { get; set; } = string.Empty;
-	public string Position { get; set; } = string.Empty;
-	public string Description { get; set; } = string.Empty;
+	
+	[Required]
 	public int CandidateId { get; set; }
 	public IEnumerable<TechnologyDTO>? Technologies { get; set; }
 }
