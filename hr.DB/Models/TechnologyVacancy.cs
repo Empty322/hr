@@ -1,4 +1,6 @@
-﻿namespace hr.DB.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace hr.DB.Models;
 
 public class TechnologyVacancy
 {

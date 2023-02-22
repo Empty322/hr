@@ -12,6 +12,6 @@ public class Technology
 	/// </summary>
 	[Key]
 	public string Title { get; set; } = string.Empty;
-	public List<Vacancy>? Vacancies { get; set; }
+	public List<TechnologyVacancy>? Vacancies { get; set; }
 	public List<TechnologyPlaceOfWork>? PlacesOfWork { get; set; }
 }

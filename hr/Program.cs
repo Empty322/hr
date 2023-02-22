@@ -1,5 +1,8 @@
 using hr.AutoMapper;
 using hr.DB;
+using hr.Models.CandidateStatus;
+using hr.Models.PlaceOfWork;
+using hr.Models.Vacancy;
 using hr.Services;
 using hr.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +20,7 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 builder.Services.AddTransient<ICandidateService, CandidateService>();
 builder.Services.AddTransient<IPlaceOfWorkService, PlaceOfWorkService>();
 builder.Services.AddTransient<IVacancyService, VacancyService>();
+builder.Services.AddTransient<ICandidateStatusService, CandidateStatusService>();
 builder.Services.AddTransient<ITechnologyService, TechnologyService>();
 
 builder.Services.AddControllers();

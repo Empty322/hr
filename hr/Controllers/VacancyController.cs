@@ -1,3 +1,4 @@
+using hr.Models.PlaceOfWork;
 using hr.Models.Vacancy;
 using hr.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;

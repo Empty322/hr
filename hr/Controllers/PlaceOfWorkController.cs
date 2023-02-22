@@ -40,7 +40,7 @@ namespace hr.Controllers
 		}
 
 		[HttpPut]
-		public ActionResult Update(PlaceOfWorkDTO placeOfWork)
+		public ActionResult<PlaceOfWorkDTO> Update(UpdatePlaceOfWorkRequest placeOfWork)
 		{
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
@@ -49,18 +49,18 @@ namespace hr.Controllers
 			if (updatedPlaceOfWork == null)
 				return NotFound();
 
-			return Ok();
+			return Ok(updatedPlaceOfWork);
 		}
 
 		[HttpDelete("{id}")]
-		public ActionResult Delete(int id)
+		public ActionResult<PlaceOfWorkDTO> Delete(int id)
 		{
 			var deletedPlaceOfWork = placeOfWorkService.Delete(id);
 
 			if (deletedPlaceOfWork == null)
 				return NotFound();
 
-			return Ok();
+			return Ok(deletedPlaceOfWork);
 		}
 	}
 }

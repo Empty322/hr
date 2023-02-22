@@ -42,6 +42,7 @@ public class CandidateService : ICandidateService
 	{
 		throw new NotImplementedException();
 	}
+
 	public CandidateDTO? Update(CandidateDTO newCandidate)
 	{
 		if (newCandidate == null) 

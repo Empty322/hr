@@ -1,10 +1,9 @@
 ﻿using hr.DB.Models;
 
-namespace hr.Services.Interfaces
+namespace hr.Services.Interfaces;
+
+public interface ITechnologyService
 {
-	public interface ITechnologyService
-	{
-		void SetTechnologyStates(List<TechnologyPlaceOfWork> technologies);
-		void SetTechnologyStates(List<TechnologyVacancy> technologies);
-	}
+	void SetTechnologyStates(List<TechnologyPlaceOfWork> technologies);
+	void SetTechnologyStates(List<TechnologyVacancy> technologies);
 }
