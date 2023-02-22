@@ -5,5 +5,5 @@ namespace hr.Services.Interfaces;
 
 public interface ICandidateService: ICRUDService<CreateCandidateRequest, CandidateDTO, CandidateDTO>
 {
-	IEnumerable<CandidateDTO> GetSuitable(IEnumerable<TechnologyDTO> technologies);
+	IEnumerable<CandidateDTO> GetSuitable(IEnumerable<string> technologies);
 }

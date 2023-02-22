@@ -4,6 +4,7 @@ using hr.DB.Models;
 using hr.Models.Candidate;
 using hr.Models.Technology;
 using hr.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace hr.Services;
 
@@ -38,9 +39,28 @@ public class CandidateService : ICandidateService
 		return mapper.Map<CandidateDTO>(candidate);
 	}
 
-	public IEnumerable<CandidateDTO> GetSuitable(IEnumerable<TechnologyDTO> technologies)
+	public IEnumerable<CandidateDTO> GetSuitable(IEnumerable<string> requiredTechnologies)
 	{
-		throw new NotImplementedException();
+		// Получаем всех кандидатов
+		var allCandidates = dbContext.Candidates
+			.Include(x => x.PlacesOfWork).ThenInclude(x => x.Technologies);
+
+		// Подходящие кандидаты
+		var suitableCandidates = new List<CandidateDTO>();
+
+		foreach (var candidate in allCandidates)
+		{
+			// Технологии, которыме были у кандидата на местах работы
+			var candidateTechnologies = candidate.PlacesOfWork
+				.SelectMany(x => x.Technologies).Select(x => x.TechnologyTitle)
+				.ToList();
+
+			// Если кандидат владеет всеми нужными технологиями
+			if (requiredTechnologies.All(x => candidateTechnologies.Contains(x)))
+				suitableCandidates.Add(mapper.Map<CandidateDTO>(candidate));
+		}
+
+		return suitableCandidates;
 	}
 
 	public CandidateDTO? Update(CandidateDTO newCandidate)
@@ -66,7 +86,6 @@ public class CandidateService : ICandidateService
 			return null;
 
 		dbContext.Candidates.Remove(dbCandidate);
-
 		dbContext.SaveChanges();
 
 		return mapper.Map<CandidateDTO>(dbCandidate);

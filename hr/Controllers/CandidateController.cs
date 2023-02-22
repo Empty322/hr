@@ -39,8 +39,13 @@ namespace hr.Controllers
 			return Ok(candidate);
 		}
 
+		/// <summary>
+		/// Поисковый метод возвращающий подходящих кандидатов 
+		/// </summary>
+		/// <param name="technologies">Технологии, которыми должен владеть кандидат</param>
+		/// <returns>Кандидаты, владеющие всеми данными технологиями</returns>
 		[HttpGet("suitable")]
-		public ActionResult<IEnumerable<CandidateDTO>> GetSuitableCandidates([FromBody] IEnumerable<TechnologyDTO> technologies)
+		public ActionResult<IEnumerable<CandidateDTO>> GetSuitableCandidates([FromBody] IEnumerable<string> technologies)
 		{
 			var candidates = candidateService.GetSuitable(technologies);
 			return Ok(candidates);
