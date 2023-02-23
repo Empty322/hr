@@ -77,6 +77,8 @@ namespace hr.AutoMapper
 					}
 				);
 
+			CreateMap<PlaceOfWorkDTO, UpdatePlaceOfWorkRequest>().ReverseMap();
+
 			#endregion
 
 			#region Vacancy Maps

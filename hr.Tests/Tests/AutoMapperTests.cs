@@ -5,12 +5,6 @@ namespace hr.Tests
 {
 	public class AutoMapperTests
 	{
-
-		[SetUp]
-		public void Setup()
-		{
-		}
-
 		[Test]
 		public void AutomapperConfiguration_IsValid()
 		{

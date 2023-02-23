@@ -33,7 +33,7 @@ namespace hr.Services;
 		
 		dbContext.PlacesOfWork.Add(dbPlaceOfWork);
 
-		if (dbPlaceOfWork.Technologies != null)
+		if (placeOfWorkRequest.Technologies != null)
 			technologyService.SetTechnologyStates(dbPlaceOfWork.Technologies);
 
 		dbContext.SaveChanges();
@@ -68,7 +68,7 @@ namespace hr.Services;
 
 		mapper.Map(placeOfWork, dbPlaceOfWork);
 		
-		if (dbPlaceOfWork.Technologies != null)
+		if (placeOfWork.Technologies != null)
 			technologyService.SetTechnologyStates(dbPlaceOfWork.Technologies);
 
 		dbContext.SaveChanges();
