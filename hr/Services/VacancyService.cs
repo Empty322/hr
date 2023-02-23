@@ -32,7 +32,7 @@ public class VacancyService : IVacancyService
 
 		dbContext.Vacancies.Add(dbVacancy);
 
-		if (dbVacancy.Technologies != null)
+		if (newVacancy.Technologies != null)
 			technologyService.SetTechnologyStates(dbVacancy.Technologies);
 
 		dbContext.SaveChanges();
@@ -63,7 +63,7 @@ public class VacancyService : IVacancyService
 
 		mapper.Map(vacancy, dbVacancy);
 
-		if (dbVacancy.Technologies != null)
+		if (vacancy.Technologies != null)
 			technologyService.SetTechnologyStates(dbVacancy.Technologies);
 
 		dbContext.SaveChanges();

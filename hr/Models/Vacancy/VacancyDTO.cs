@@ -11,5 +11,5 @@ public class VacancyDTO
 	public string Title { get; set; } = string.Empty;
 	[Required]
 	public string Description { get; set; } = string.Empty;
-	public List<TechnologyDTO>? Technologies { get; set; }
+	public IEnumerable<TechnologyDTO>? Technologies { get; set; }
 }

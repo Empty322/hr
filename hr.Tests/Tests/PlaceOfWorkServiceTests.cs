@@ -4,6 +4,7 @@ using hr.Models.Candidate;
 using hr.Models.PlaceOfWork;
 using hr.Models.Technology;
 using hr.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace hr.Tests;
 
@@ -94,6 +95,7 @@ public class PlaceOfWorkServiceTests
 
 		createPlaceOfWorkRequest.CandidateId = createdCandidate.Id;
 		var createdPlaceOfWork = placeOfWorkService.Create(createPlaceOfWorkRequest);
+		context.ChangeTracker.Clear();
 
 		updatePlaceOfWorkRequest.Id = createdPlaceOfWork.Id;
 		var result = placeOfWorkService.Update(updatePlaceOfWorkRequest);

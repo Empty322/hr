@@ -37,7 +37,6 @@ namespace hr.Services;
 			technologyService.SetTechnologyStates(dbPlaceOfWork.Technologies);
 
 		dbContext.SaveChanges();
-		dbContext.ChangeTracker.Clear();
 
 		return mapper.Map<PlaceOfWorkDTO>(dbPlaceOfWork);
 	}
