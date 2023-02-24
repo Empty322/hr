@@ -1,9 +1,10 @@
-﻿using hr.Models.Candidate;
-using hr.Models.Technology;
+﻿using hr.Models;
+using hr.Models.Candidate;
 
 namespace hr.Services.Interfaces;
 
 public interface ICandidateService: ICRUDService<CreateCandidateRequest, CandidateDTO, CandidateDTO>
 {
-	IEnumerable<CandidateDTO> GetSuitable(IEnumerable<string> technologies);
+	PageResult<CandidateDTO> GetSuitable(IEnumerable<string> technologies);
+	PageResult<CandidateDTO> GetSuitable(IEnumerable<string> technologies, int pageIndex, int pageItemsCount);
 }

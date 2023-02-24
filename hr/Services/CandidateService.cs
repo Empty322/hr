@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using hr.DB;
 using hr.DB.Models;
+using hr.Models;
 using hr.Models.Candidate;
 using hr.Models.Technology;
 using hr.Services.Interfaces;
@@ -39,7 +40,7 @@ public class CandidateService : ICandidateService
 		return mapper.Map<CandidateDTO>(candidate);
 	}
 
-	public IEnumerable<CandidateDTO> GetSuitable(IEnumerable<string> requiredTechnologies)
+	public PageResult<CandidateDTO> GetSuitable(IEnumerable<string> requiredTechnologies)
 	{
 		// Получаем всех кандидатов
 		var allCandidates = dbContext.Candidates
@@ -60,7 +61,25 @@ public class CandidateService : ICandidateService
 				suitableCandidates.Add(mapper.Map<CandidateDTO>(candidate));
 		}
 
-		return suitableCandidates;
+		var page = new PageResult<CandidateDTO>
+		{
+			PageIndex = 0,
+			Total = suitableCandidates.Count,
+			PageItemsCount = suitableCandidates.Count,
+			Result = suitableCandidates
+		};
+
+		return page;
+	}
+
+	public PageResult<CandidateDTO> GetSuitable(IEnumerable<string> requiredTechnologies, int pageIndex, int pageItemsCount)
+	{
+		var page = GetSuitable(requiredTechnologies);
+		page.PageIndex = pageIndex;
+		page.PageItemsCount = pageItemsCount;
+		page.Result = page.Result.Skip(pageIndex * pageItemsCount).Take(pageItemsCount); 
+
+		return page;
 	}
 
 	public CandidateDTO? Update(CandidateDTO newCandidate)

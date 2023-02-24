@@ -117,8 +117,6 @@ namespace hr.Tests
 			Assert.That(candidate, Is.Null);
 		}
 
-	
-
 		[Test]
 		public void GetSuitable_ShouldReturnCandidates_ThatHaveAllTechnologiesInTheirPlacesOfWork()
 		{
@@ -134,13 +132,28 @@ namespace hr.Tests
 			var thirdStackSuitable = candidateService.GetSuitable(thirdStack);
 
 			Assert.That(
-				firstStackSuitable.Select(x => x.Id),
+				firstStackSuitable.Result.Select(x => x.Id),
 				Is.EquivalentTo(new List<int> { 1, 2, 3 }));
 			Assert.That(
-				secondStackSuitable.Select(x => x.Id),
+				secondStackSuitable.Result.Select(x => x.Id),
 				Is.EquivalentTo(new List<int> { }));
 			Assert.That(
-				thirdStackSuitable.Select(x => x.Id),
+				thirdStackSuitable.Result.Select(x => x.Id),
+				Is.EquivalentTo(new List<int> { 2 }));
+		}
+
+		[Test]
+		public void GetSuitable_ShouldReturnCandidates_ThatHaveAllTechnologiesInTheirPlacesOfWork_OnSpecifiedPage()
+		{
+			using var context = ContextFactory.Create();
+			var firstStack = new List<string> { "sql" };
+			var candidateService = new CandidateService(context, mapper);
+
+			// Database should be seeded
+			var firstStackSuitable = candidateService.GetSuitable(firstStack, 1, 1);
+
+			Assert.That(
+				firstStackSuitable.Result.Select(x => x.Id),
 				Is.EquivalentTo(new List<int> { 2 }));
 		}
 	}

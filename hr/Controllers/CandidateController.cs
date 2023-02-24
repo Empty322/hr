@@ -1,3 +1,4 @@
+using hr.Models;
 using hr.Models.Candidate;
 using hr.Models.Technology;
 using hr.Services;
@@ -44,10 +45,25 @@ namespace hr.Controllers
 		/// </summary>
 		/// <param name="technologies">Технологии, которыми должен владеть кандидат</param>
 		/// <returns>Кандидаты, владеющие всеми данными технологиями</returns>
-		[HttpGet("suitable")]
-		public ActionResult<IEnumerable<CandidateDTO>> GetSuitableCandidates([FromBody] IEnumerable<string> technologies)
+		[HttpPost("suitable")]
+		public ActionResult<PageResult<CandidateDTO>> GetSuitableCandidates([FromBody] IEnumerable<string> technologies)
 		{
 			var candidates = candidateService.GetSuitable(technologies);
+			return Ok(candidates);
+		}
+
+		/// <summary>
+		/// Поисковый метод возвращающий подходящих кандидатов 
+		/// </summary>
+		/// <param name="technologies">Технологии, которыми должен владеть кандидат</param>
+		/// <param name="pageIndex">Индекс страницы</param>
+		/// <param name="pageItemsCount">Количество элементов на странице</param>
+		/// <returns>Кандидаты, владеющие всеми данными технологиями</returns>
+		[HttpPost("suitable/{pageIndex}")]
+		public ActionResult<PageResult<CandidateDTO>> GetSuitableCandidates([FromBody] IEnumerable<string> technologies,
+			[FromRoute] int pageIndex, [FromQuery] int pageItemsCount = 10)
+		{
+			var candidates = candidateService.GetSuitable(technologies, pageIndex, pageItemsCount);
 			return Ok(candidates);
 		}
 
