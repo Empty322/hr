@@ -8,7 +8,7 @@ public class CreateCandidateStatusRequest
 	[Required]
 	public Status? Status { get; set; }
 	[Required]
-	public int CandidateId { get; set; }
+	public int? CandidateId { get; set; }
 	[Required]
-	public int VacancyId { get; set; }
+	public int? VacancyId { get; set; }
 }

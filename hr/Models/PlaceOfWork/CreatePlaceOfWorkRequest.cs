@@ -7,8 +7,7 @@ namespace hr.Models.PlaceOfWork;
 
 public class CreatePlaceOfWorkRequest : PlaceOfWorkBaseModel
 {
-	
 	[Required]
-	public int CandidateId { get; set; }
+	public int? CandidateId { get; set; }
 	public IEnumerable<TechnologyDTO>? Technologies { get; set; }
 }
